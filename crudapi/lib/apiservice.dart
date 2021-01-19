@@ -3,11 +3,17 @@ import 'package:http/http.dart' show Client;
 //import 'dart:convert';
 
 class ApiService {
-  final String baseUrl = "localhost:8080";
+  //jika pakai ios
+  //final String baseUrl = "localhost:8080";
+  //harap menjalankan rest dengan: php -S localhost:8080 -t public public/index.php
+  //jika pakai android
+  final String baseUrl = "10.0.2.2:8080";
+  //harap menjalankan slimRest dengan: php -S 127.0.0.1:8080 -t public public/index.php
   Client client = Client();
 
   Future<BookResult> getBooks() async {
-    final response = await client.get(new Uri.http("$baseUrl", "/books/"));
+    String url = new Uri.http("$baseUrl", "/books/").toString();
+    final response = await client.get(url);
     if (response.statusCode == 200) {
       return booksResultFromJson(response.body);
     } else {
